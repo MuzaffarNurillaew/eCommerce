@@ -1,32 +1,97 @@
-﻿using eCommerce.Data.IRepositories;
+﻿using eCommerce.Data.DbContexts;
+using eCommerce.Data.IRepositories;
 using eCommerce.Domain.Commons;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
 namespace eCommerce.Data.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditable
     {
-        public Task<bool> DeleteAsync(int id)
+        private readonly eCommerceDbContext dbContext;
+        private readonly DbSet<TEntity> dbSet;
+        public Repository(eCommerceDbContext dbContext)
         {
-            throw new NotImplementedException();
+            this.dbContext = dbContext;
+            dbSet = dbContext.Set<TEntity>();
         }
+        #region delete
+        /// <summary>
+        /// Deletes information in database
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns>true if action is successful, false if unable to delete</returns>
+        public async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression)
+        {
+            var entity = await this.SelectAsync(expression);
 
-        public IQueryable<TEntity> GetAllAsync(Predicate<TEntity> predicate = null)
-        {
-            throw new NotImplementedException();
-        }
+            if (entity is not null)
+            {
+                this.dbSet.Remove(entity);
+                return true;
+            }
 
-        public Task<TEntity> GetByAsync(Predicate<TEntity> predicate = null)
-        {
-            throw new NotImplementedException();
+            return false;
         }
+        #endregion
 
-        public Task<TEntity> InsertAsync(TEntity teintity)
+        #region insert
+        /// <summary>
+        /// Inserts element to a table
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            throw new NotImplementedException();
-        }
+            var entry = await this.dbSet.AddAsync(entity);
 
-        public Task<TEntity> UpdateAsync(TEntity teintity)
-        {
-            throw new NotImplementedException();
+            return entry.Entity;
         }
+        #endregion
+
+        #region save
+        /// <summary>
+        /// saves tracking changes
+        /// </summary>
+        /// <returns></returns>
+        public async Task SaveAsync()
+        {
+            await dbContext.SaveChangesAsync();
+        }
+        #endregion
+
+        #region select all
+        /// <summary>
+        /// Selects all element of table
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<TEntity> SelectAll() => this.dbSet;
+        #endregion
+
+        #region select
+        /// <summary>
+        /// selects element from a table specified with expression
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public async Task<TEntity> SelectAsync(Expression<Func<TEntity, bool>> expression)
+            => await this.dbSet.FirstOrDefaultAsync(expression);
+        #endregion
+
+        #region update
+        /// <summary>
+        /// updates element in the table
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            var entry = this.dbSet.Update(entity);
+
+            return await Task.FromResult(entry.Entity);
+        }
+        #endregion
+
     }
 }
+

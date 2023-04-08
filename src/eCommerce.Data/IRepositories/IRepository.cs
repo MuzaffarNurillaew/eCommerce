@@ -1,13 +1,15 @@
-﻿namespace eCommerce.Data.IRepositories
+﻿using System.Linq.Expressions;
+
+namespace eCommerce.Data.IRepositories
 {
 
-    public interface IRepository<TEintity>
+    public interface IRepository<TEntity>
     {
-        Task<TEintity> InsertAsync(TEintity teintity);
-        Task<TEintity> UpdateAsync(TEintity teintity);
-        Task<bool> DeleteAsync(int id);
-        Task<TEintity> GetByAsync(Predicate<TEintity> predicate = null);
-
-        IQueryable<TEintity> GetAllAsync(Predicate<TEintity> predicate = null);
+        Task<TEntity> InsertAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
+        Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression);
+        Task<TEntity> SelectAsync(Expression<Func<TEntity, bool>> expression);
+        IQueryable<TEntity> SelectAll();
+        Task SaveAsync();
     }
 }
