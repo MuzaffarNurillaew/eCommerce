@@ -1,6 +1,6 @@
 ﻿using eCommerce.Domain.Commons;
 
-namespace eCommerce.Domain.Entities
+namespace eCommerce.Domain.Entities.Orders
 {
     public class CreditCard : Auditable
     {

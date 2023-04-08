@@ -1,6 +1,6 @@
 ﻿using eCommerce.Domain.Commons;
 
-namespace eCommerce.Domain.Entities
+namespace eCommerce.Domain.Entities.Products
 {
     public class Product : Auditable
     {
@@ -11,7 +11,7 @@ namespace eCommerce.Domain.Entities
 
         public long ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
-    
+
         public ICollection<ProductSearchTag> SearchTags { get; set; }
     }
 }

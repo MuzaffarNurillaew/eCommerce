@@ -1,6 +1,6 @@
 ﻿using eCommerce.Domain.Commons;
 
-namespace eCommerce.Domain.Entities
+namespace eCommerce.Domain.Entities.Chats
 {
     public class Chat : Auditable
     {

@@ -1,7 +1,7 @@
 ﻿using eCommerce.Domain.Commons;
 using eCommerce.Domain.Enums;
 
-namespace eCommerce.Domain.Entities
+namespace eCommerce.Domain.Entities.Orders
 {
     public class Order : Auditable
     {

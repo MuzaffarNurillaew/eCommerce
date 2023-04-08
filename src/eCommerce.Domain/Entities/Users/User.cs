@@ -1,7 +1,8 @@
 ﻿using eCommerce.Domain.Commons;
-using System.ComponentModel.DataAnnotations.Schema;
+using eCommerce.Domain.Entities.Chats;
+using eCommerce.Domain.Entities.Orders;
 
-namespace eCommerce.Domain.Entities
+namespace eCommerce.Domain.Entities.Users
 {
     public class User : Auditable
     {
@@ -13,7 +14,7 @@ namespace eCommerce.Domain.Entities
         public string Email { get; set; }
         public decimal Balance { get; set; }
         public string Password { get; set; }
-        
+
         public long AddressId { get; set; }
         public Address Address { get; set; }
 
