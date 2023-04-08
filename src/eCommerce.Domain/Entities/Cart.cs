@@ -1,6 +1,8 @@
-﻿namespace eCommerce.Domain.Entities
+﻿using eCommerce.Domain.Commons;
+
+namespace eCommerce.Domain.Entities
 {
-    internal class Cart
+    public class Cart : Auditable
     {
     }
 }

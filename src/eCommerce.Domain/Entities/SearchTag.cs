@@ -2,7 +2,8 @@
 
 namespace eCommerce.Domain.Entities
 {
-    public class Payment : Auditable
+    public class SearchTag : Auditable
     {
+        public string Name { get; set; }
     }
 }

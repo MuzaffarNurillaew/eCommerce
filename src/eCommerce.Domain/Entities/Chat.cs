@@ -1,6 +1,8 @@
-﻿namespace eCommerce.Domain.Entities
+﻿using eCommerce.Domain.Commons;
+
+namespace eCommerce.Domain.Entities
 {
-    internal class Chat
+    public class Chat : Auditable
     {
     }
 }

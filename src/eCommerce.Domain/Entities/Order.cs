@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using eCommerce.Domain.Commons;
 
 namespace eCommerce.Domain.Entities
 {
-    internal class Order
+    public class Order : Auditable
     {
     }
 }

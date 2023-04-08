@@ -2,7 +2,7 @@
 
 namespace eCommerce.Domain.Entities
 {
-    public class Payment : Auditable
+    public class Address : Auditable
     {
     }
 }

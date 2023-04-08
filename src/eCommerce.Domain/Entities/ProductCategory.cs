@@ -1,6 +1,9 @@
-﻿namespace eCommerce.Domain.Entities
+﻿using eCommerce.Domain.Commons;
+
+namespace eCommerce.Domain.Entities
 {
-    internal class ProductCategory
+    public class ProductCategory : Auditable
     {
+        public string Name { get; set; }
     }
 }
