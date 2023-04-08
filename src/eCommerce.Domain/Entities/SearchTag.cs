@@ -4,6 +4,6 @@ namespace eCommerce.Domain.Entities
 {
     public class SearchTag : Auditable
     {
-        public string Name { get; set; }
+        public string SearchString { get; set; }
     }
 }

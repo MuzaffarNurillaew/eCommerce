@@ -2,12 +2,12 @@
 
 namespace eCommerce.Domain.Entities
 {
-    public class Payment : Auditable
+    public class CreditCard : Auditable
     {
         public long UserId { get; set; }
         public User User { get; set; }
 
-        public long OrderId { get; set; }
-        public Order Order { get; set; }
+        public string Number { get; set; }
+        public int SecurityNumber { get; set; }
     }
 }
