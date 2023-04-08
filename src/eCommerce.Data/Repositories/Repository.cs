@@ -1,8 +1,8 @@
 ﻿using eCommerce.Data.IRepositories;
-
+using eCommerce.Domain.Commons;
 namespace eCommerce.Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditable
     {
         public Task<bool> DeleteAsync(int id)
         {
