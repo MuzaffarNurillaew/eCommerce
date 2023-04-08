@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    :root {
+        --white: #fff;
+        --black: #101010;
+        --dark: #191919;
+        --gray: rgba(1,1,1,0.6);
+        --lite: rgba(255,255,255,0.6);
+        --primary: linear-gradient(145deg,#f81f01,#ee076e);
+        --primary_dark: #f81f01;
+        --secondary: #154b87;
+    }
+    .cursor {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--primary_dark);
+        pointer-events: none;
+        -webkit-transition: 0.15s;
+        transition: 0.15s;
+        position: absolute;
+        border-radius: 50%;
+        mix-blend-mode: difference;
+        z-index: 9999;
+        transition-duration: 200ms;
+        transition-timing-function: ease-out;
+    }
+
+        .cursor::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            -webkit-transition: 0.2s;
+            transition: 0.2s;
+            position: absolute;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transition-duration: 200ms;
+            transition-timing-function: ease-out;
+        }
+
+    body {
+        background: url("https://www.insignia.com/wp-content/uploads/2020/10/ecommerce-shopping-cart-keyboard-ss-1920.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        align-items: center;
+        position: relative;
+    }
+</style>
+<header class="flex">
+        <div class="container">
+            <h1 class="text-white" style="font-size: 100px;margin-top:200px ; ">Ecommers</h1>
+            <a href="#" class="btn btn-outline-primary" style="margin-top: 50px; font-size:4em;">Get Started</a>
+        </div>
+</header>
+<div class="cursor"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<script>
+    (() => {
+
+        const cursor = document.querySelector('.cursor');
+
+        document.addEventListener('mousemove', e => {
+            cursor.setAttribute('style', `top:  ${e.pageY - 25}px; left: ${e.pageX - 25}px;`);
+        });
+
+        document.addEventListener('click', () => {
+            console.log("%c Click...!!!", "font-size: 20px; color:red;");
+
+            cursor.classList.add('cursor--expand');
+            console.log(cursor.classList);
+
+            setTimeout(() => {
+                cursor.classList.remove('cursor--expand');
+            }, 500);
+        });
+    })();
+</script>

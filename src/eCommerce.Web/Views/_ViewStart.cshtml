@@ -1,0 +1,10 @@
+﻿@{
+    if (ViewContext.RouteData.Values["controller"].ToString().Equals("User", StringComparison.InvariantCultureIgnoreCase))
+    {
+        Layout = "~/Views/Shared/_UserLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
