@@ -1,4 +1,5 @@
 ﻿using eCommerce.Domain.Commons;
+using eCommerce.Domain.Entities.Users;
 
 namespace eCommerce.Domain.Entities.Chats
 {

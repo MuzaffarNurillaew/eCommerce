@@ -1,4 +1,5 @@
 ﻿using eCommerce.Domain.Commons;
+using eCommerce.Domain.Entities.Products;
 
 namespace eCommerce.Domain.Entities.Orders
 {

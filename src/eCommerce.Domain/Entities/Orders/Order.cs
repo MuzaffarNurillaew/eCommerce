@@ -1,4 +1,5 @@
 ﻿using eCommerce.Domain.Commons;
+using eCommerce.Domain.Entities.Users;
 using eCommerce.Domain.Enums;
 
 namespace eCommerce.Domain.Entities.Orders
