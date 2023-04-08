@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - Dashboard</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/eCommerce.Mvc.styles.css" asp-append-version="true" />
+</head>
+<body>
+	<header>
+		<nav class="nav">
+			<div>
+				<h1>Ecommers</h1>
+			</div>
+			<div>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Dashboar</a></li>
+					<li>
+						<a href="#" onclick="dropdownToggle1(this)">Orders</a>
+					</li>
+				</ul>
+			</div>
+			<button onclick="activeToggle(this)">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+	<style type="text/css">
+		body {
+			margin: 0;
+			box-sizing: border-box;
+			font-family: arial;
+		}
+
+		.nav {
+			background-color: #efefef;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 20%;
+			height: 90px;
+			font-size: 15;
+		}
+
+			.nav > div:nth-child(1) {
+				font-size: 1.25em;
+				font-weight: bold;
+			}
+
+			.nav > div:nth-child(2) > ul {
+				list-style: none;
+			}
+
+				.nav > div:nth-child(2) > ul > li {
+					display: inline-block;
+					padding: 35px 20px;
+				}
+
+					.nav > div:nth-child(2) > ul > li > a {
+						color: black;
+						text-decoration: none;
+						font-weight: bold;
+					}
+
+					.nav > div:nth-child(2) > ul > li > div {
+						position: absolute;
+						left: 0;
+						right: 0;
+						top: 90px;
+						background-color: #efefef;
+						padding: 0 20% 35px 20%;
+						transform: scale(1,0);
+						transform-origin: top;
+						transition: transform 0.2s ease-in-out 0.2s;
+					}
+
+						.nav > div:nth-child(2) > ul > li > div > * {
+							opacity: 0;
+							transition: opacity 0.1s ease-in-out 0.1s;
+						}
+
+			.nav a {
+				transition: color 0.2s ease-in-out;
+			}
+
+			.nav > button {
+				cursor: pointer;
+				position: relative;
+				width: 30px;
+				height: 28px;
+				display: none;
+				appearance: none;
+				border: none;
+				background: unset;
+			}
+
+				.nav > button > span {
+					right: 0;
+					position: absolute;
+					height: 4px;
+					width: 30px;
+					background: black;
+					border-radius: 2px;
+					transition: 0.2s;
+					-webkit-transition: 0.2s;
+					transform-origin: center;
+				}
+
+					.nav > button > span:nth-child(1) {
+						top: 0;
+					}
+
+					.nav > button > span:nth-child(2) {
+						top: 10px;
+					}
+
+					.nav > button > span:nth-child(3) {
+						top: 20px;
+					}
+
+			.nav.active > button > span:nth-child(1) {
+				transform: translateY(10px) rotate(-45deg);
+			}
+
+			.nav.active > button > span:nth-child(2) {
+				opacity: 0;
+			}
+
+			.nav.active > button > span:nth-child(3) {
+				transform: translateY(-10px) rotate(45deg);
+			}
+
+			.nav > div:nth-child(2) > ul > li > div > button {
+				appearance: none;
+				position: relative;
+				border: none;
+				cursor: pointer;
+				width: 30px;
+				height: 28px;
+				background: unset;
+			}
+
+				.nav > div:nth-child(2) > ul > li > div > button > span {
+					right: 4px;
+					position: absolute;
+					height: 4px;
+					width: 20px;
+					background: black;
+					border-radius: 2px;
+					transition: 0.2s;
+					-webkit-transition: 0.2s;
+					transform-origin: center;
+				}
+
+					.nav > div:nth-child(2) > ul > li > div > button > span:nth-child(1) {
+						top: 0px;
+						transform: rotate(45deg);
+					}
+
+					.nav > div:nth-child(2) > ul > li > div > button > span:nth-child(2) {
+						top: 12px;
+						transform: rotate(-45deg);
+					}
+
+		@@media screen and (min-width: 1201px) {
+			.nav > div:nth-child(2) > ul > li > div > button {
+				display: none;
+			}
+
+			.nav > div:nth-child(2) > ul > li:hover > div {
+				transform: scale(1,1);
+				transition: transform 0.2s ease-in-out;
+			}
+
+				.nav > div:nth-child(2) > ul > li:hover > div > * {
+					opacity: 1;
+					transition: opacity 0.2s ease-in-out 0.3s;
+				}
+
+			.nav a:hover {
+				color: #395bc0 !important;
+			}
+		}
+
+		@@media screen and (max-width: 1200px) {
+			.nav > button {
+				display: unset;
+			}
+
+			.nav {
+				padding: 0 10%;
+			}
+
+				.nav > div:nth-child(1) {
+					transition: opacity 0.2s ease-in-out 0.3s;
+				}
+
+				.nav.active > div:nth-child(1) {
+					opacity: 0;
+					transition: opacity 0.2s ease-in-out;
+				}
+
+				.nav > div:nth-child(2) {
+					padding: 0 10%;
+					position: fixed;
+					right: 0;
+					left: 0;
+					top: 90px;
+					bottom: 0;
+					background-color: #efefef;
+					transform: scale(0,1);
+					transform-origin: right;
+					transition: transform 0.2s ease-in-out;
+				}
+
+				.nav.active > div:nth-child(2) {
+					transform: scale(1,1);
+				}
+
+				.nav > div:nth-child(2) > ul {
+					opacity: 0;
+					text-align: right;
+					transition: opacity 0.05s ease-in-out;
+				}
+
+				.nav.active > div:nth-child(2) > ul {
+					opacity: 1;
+					transition: opacity 0.2s ease-in-out 0.3s;
+				}
+
+				.nav > div:nth-child(2) > ul > li {
+					display: block;
+					margin: 10px 0;
+					font-size: 20px;
+					padding: 0;
+				}
+
+				.nav > div:nth-child(3) {
+					opacity: 0;
+					transition: 0.2s ease-in-out;
+					position: absolute;
+				}
+
+				.nav.active > div:nth-child(3) {
+					opacity: 1;
+					transition: 0.2s ease-in-out 0.3s;
+				}
+
+				.nav > div:nth-child(2) > ul > li > div {
+					inset: 0;
+					padding: 0 10%;
+					transform: scale(0,1);
+					transform-origin: right;
+					transition: transform 0.2s ease-in-out;
+				}
+
+					.nav > div:nth-child(2) > ul > li > div > * {
+						opacity: 0;
+						transition: opacity 0.01s ease-in-out;
+					}
+
+					.nav > div:nth-child(2) > ul > li > div.active {
+						transform: scale(1,1);
+					}
+
+						.nav > div:nth-child(2) > ul > li > div.active > * {
+							opacity: 1;
+							transition: opacity 0.2s ease-in-out 0.3s;
+						}
+		}
+	</style>
+	<script>
+		function activeToggle(element) {
+			parent = element.parentElement;
+			parent.classList.toggle('active');
+		}
+		function dropdownToggle1(element) {
+			parent = element.parentElement;
+			parent.querySelector('div').classList.toggle('active');
+		}
+	</script>
+</body>
+</html>
