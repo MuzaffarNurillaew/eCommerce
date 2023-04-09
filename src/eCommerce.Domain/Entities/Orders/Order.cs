@@ -17,5 +17,6 @@ namespace eCommerce.Domain.Entities.Orders
         public bool IsPaid { get; set; } = false;
 
         public ICollection<OrderItem> Items { get; set; }
+        public Payment Payment { get; set; }
     }
 }

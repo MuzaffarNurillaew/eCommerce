@@ -18,9 +18,11 @@ namespace eCommerce.Domain.Entities.Users
         public long AddressId { get; set; }
         public Address Address { get; set; }
 
+        public long CreditCardId { get; set; }
+        public CreditCard CreditCard { get; set; }
+
         public ICollection<Order> Orders { get; set; }
         public ICollection<Payment> Payments { get; set; }
         public ICollection<Chat> Chats { get; set; }
-        public CreditCard CreditCard { get; set; }
     }
 }
