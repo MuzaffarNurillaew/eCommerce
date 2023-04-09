@@ -10,5 +10,7 @@ namespace eCommerce.Domain.Entities.Chats
 
         public long SecondUserId { get; set; }
         public User SecondUser { get; set; }
+
+        public ICollection<Message> Messages { get; set; }
     }
 }
