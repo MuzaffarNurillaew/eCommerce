@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\eCommerce.Data\eCommerce.Data.csproj" />
     <ProjectReference Include="..\eCommerce.Domain\eCommerce.Domain.csproj" />
   </ItemGroup>
 
