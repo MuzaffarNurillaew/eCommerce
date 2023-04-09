@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Dtos\Chats\" />
     <Folder Include="Dtos\Orders\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\eCommerce.Data\eCommerce.Data.csproj" />
     <ProjectReference Include="..\eCommerce.Domain\eCommerce.Domain.csproj" />
   </ItemGroup>
 
