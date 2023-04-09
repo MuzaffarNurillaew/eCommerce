@@ -1,6 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<header class="flex">
+        <div class="container">
+            <h1 class="text-white" style="font-size: 100px;margin-top:200px ; ">Ecommers</h1>
+            <a href="@Url.Action("Index","Product")" class="btn btn-outline-primary" style="margin-top: 50px; font-size:4em;">Get Started</a>
+        </div>
+</header>
 <style>
     :root {
         --white: #fff;
@@ -57,15 +63,8 @@
         position: relative;
     }
 </style>
-<header class="flex">
-        <div class="container">
-            <h1 class="text-white" style="font-size: 100px;margin-top:200px ; ">Ecommers</h1>
-            <a href="#" class="btn btn-outline-primary" style="margin-top: 50px; font-size:4em;">Get Started</a>
-        </div>
-</header>
 <div class="cursor"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
 <script>
     (() => {
 
@@ -76,7 +75,7 @@
         });
 
         document.addEventListener('click', () => {
-            console.log("%c Click...!!!", "font-size: 20px; color:red;");
+            console.log("%c Bosildi...!!!", "font-size: 20px; color:red;");
 
             cursor.classList.add('cursor--expand');
             console.log(cursor.classList);
