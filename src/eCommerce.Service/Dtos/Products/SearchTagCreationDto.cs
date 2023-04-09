@@ -2,5 +2,6 @@
 {
     public class SearchTagCreationDto
     {
+        public string SearchString { get; set; }
     }
 }
