@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using eCommerce.Domain.Entities.Users;
+using eCommerce.Service.Dtos.Users;
 
 namespace eCommerce.Service.Mappers
 {
@@ -6,7 +8,9 @@ namespace eCommerce.Service.Mappers
     {
         public MapperProfile()
         {
-            
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserCreationDto>().ReverseMap();
+
         }
     }
 }

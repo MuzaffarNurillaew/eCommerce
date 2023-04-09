@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Dtos\Chats\" />
     <Folder Include="Dtos\Orders\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
