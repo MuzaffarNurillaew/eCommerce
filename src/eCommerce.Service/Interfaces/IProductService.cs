@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eCommerce.Service.Dtos.Chats
+namespace eCommerce.Service.Interfaces
 {
-    internal class MessageCreationDto
+    internal class IProductService
     {
     }
 }
