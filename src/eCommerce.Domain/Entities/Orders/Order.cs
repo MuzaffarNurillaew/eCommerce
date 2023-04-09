@@ -9,8 +9,6 @@ namespace eCommerce.Domain.Entities.Orders
         public long UserId { get; set; }
         public User User { get; set; }
 
-        public decimal TotalPayment { get; set; }
-
         public PaymentType PaymentType { get; set; }
         public OrderStatus Status { get; set; }
 
