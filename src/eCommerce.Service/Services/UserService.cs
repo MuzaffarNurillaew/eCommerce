@@ -4,6 +4,7 @@ using eCommerce.Domain.Configurations;
 using eCommerce.Domain.Entities.Users;
 using eCommerce.Service.Dtos.Users;
 using eCommerce.Service.Exceptions;
+using eCommerce.Service.Extensions;
 using eCommerce.Service.Interfaces;
 using System.Linq.Expressions;
 
@@ -47,24 +48,57 @@ namespace eCommerce.Service.Services
             }
         }
 
-        public Task<bool> DeleteAsync(Expression<Func<User, bool>> expression)
+        public async Task<bool> DeleteAsync(Expression<Func<User, bool>> expression)
         {
-            throw new NotImplementedException();
+            var isDeleted = await _userRepository.DeleteAsync(expression);
+            if (!isDeleted)
+                throw new CustomException(404, "Matching user not found");
+
+            await _userRepository.SaveAsync();
+            return isDeleted;
         }
 
-        public Task<List<UserDto>> GetAllAsync(PaginationParams @params, Expression<Func<User, bool>> expression = null)
+        public async Task<List<UserDto>> GetAllAsync(PaginationParams @params, Expression<Func<User, bool>> expression = null)
         {
-            throw new NotImplementedException();
+            if (expression is null)
+            {
+                expression = (x => true);
+            }
+
+            var entities = _userRepository.SelectAll();
+
+            entities = entities.Where(expression).ToPagedList<User>(@params);
+
+            var filteredUsers = entities.ToList();
+
+            var result = _mapper.Map<List<UserDto>>(entities);
+
+            return await Task.FromResult(result);
         }
 
-        public Task<UserDto> GetAsync(Expression<Func<User, bool>> expression)
+        public async Task<UserDto> GetAsync(Expression<Func<User, bool>> expression)
         {
-            throw new NotImplementedException();
+            var entity = await _userRepository.SelectAsync(expression);
+
+            if (entity is null)
+                throw new CustomException(404, "Matching user not found");
+
+            return _mapper.Map<UserDto>(entity);
         }
 
-        public Task<UserDto> UpdateAsync(Expression<Func<User, bool>> expression, UserDto userDto)
+        public async Task<UserDto> UpdateAsync(Expression<Func<User, bool>> expression, UserDto userDto)
         {
-            throw new NotImplementedException();
+            var entity = await _userRepository.SelectAsync(expression);
+
+            if (entity is null)
+                throw new CustomException(404, "Matching user not found");
+
+            _mapper.Map(userDto, entity, typeof(UserDto), typeof(User));
+
+            var updatedEntity = await _userRepository.UpdateAsync(entity);
+            await _userRepository.SaveAsync();
+
+            return _mapper.Map<UserDto>(updatedEntity);
         }
     }
 }

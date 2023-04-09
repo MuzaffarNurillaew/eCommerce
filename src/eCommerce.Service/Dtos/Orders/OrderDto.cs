@@ -12,7 +12,9 @@ namespace eCommerce.Service.Dtos.Orders
         public OrderStatus Status { get; set; }
         public bool IsPaid { get; set; }
         public decimal TotalPrice { get; set; }
+
         public ICollection<OrderItem> Items { get; set; }
+
         public Payment Payment { get; set; }
     }
 }

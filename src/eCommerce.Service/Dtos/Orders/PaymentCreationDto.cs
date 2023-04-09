@@ -2,9 +2,8 @@
 {
     public class PaymentCreationDto
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Count { get; set; }
-        public decimal Price { get; set; }
+        public long UserId { get; set; }
+        public long OrderId { get; set; }
+        public decimal TotalPayment { get; set; }
     }
 }
