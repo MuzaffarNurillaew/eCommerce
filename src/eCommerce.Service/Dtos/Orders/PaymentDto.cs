@@ -1,11 +1,10 @@
 ﻿using eCommerce.Domain.Commons;
-using eCommerce.Domain.Entities.Orders;
-using eCommerce.Domain.Entities.Products;
 
 namespace eCommerce.Service.Dtos.Orders
 {
-    public class PaymentDto:Auditable
+    public class PaymentDto
     {
+        public long Id { get; set; }
         public long UserId { get; set; }
         public long OrderId { get; set; }
         public decimal TotalPayment { get; set; }

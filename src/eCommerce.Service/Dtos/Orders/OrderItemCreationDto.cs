@@ -1,17 +1,16 @@
-﻿using eCommerce.Domain.Entities.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace eCommerce.Service.Dtos.Orders
 {
-    internal class OrderItemCreationDto
+    public class OrderItemCreationDto
     {
-        public Order Order { get; set; }
+        [Required]
         public long ProductId { get; set; }
+
+        [Required, Range(1, long.MaxValue)]
         public long ProductCount { get; set; }
+
+        [Required, Range(0.01, long.MaxValue)]
         public decimal TotalMoneyToBePaid { get; set; }
     }
 }

@@ -22,18 +22,10 @@ namespace eCommerce.Service.Services
             _addressRepository = addressRepository;
             _mapper = mapper;
         }
-        public async Task<AddressDto> CreateAsync(AddressCreationDto userDto)
+        public async Task<AddressDto> CreateAsync(AddressCreationDto dto)
         {
-            var entity = await _addressRepository.SelectAsync(address
-              => address.Country == userDto.Country || address.City == userDto.City);
-
-            if (entity is not null)
-            {
-                throw new CustomException(400, "User Already exists");
-            }
-
-            Address entityToInsert = _mapper.Map<Address>(userDto);
-
+            Address entityToInsert = _mapper.Map<Address>(dto);
+            
             try
             {
                 entityToInsert.CreatedAt = DateTime.UtcNow;
@@ -53,7 +45,7 @@ namespace eCommerce.Service.Services
         {
             var isDeleted = await _addressRepository.DeleteAsync(expression);
             if (!isDeleted)
-                throw new CustomException(404, "Matching user not found");
+                throw new CustomException(404, "Matching entity not found");
 
             await _addressRepository.SaveAsync();
             return isDeleted;
@@ -72,7 +64,7 @@ namespace eCommerce.Service.Services
 
             var filteredAddresses = entities.ToList();
 
-            var result = _mapper.Map<List<AddressDto>>(entities);
+            var result = _mapper.Map<List<AddressDto>>(filteredAddresses);
 
             return await Task.FromResult(result);
         }
@@ -82,7 +74,7 @@ namespace eCommerce.Service.Services
             var entity = await _addressRepository.SelectAsync(expression);
 
             if (entity is null)
-                throw new CustomException(404, "Matching user not found");
+                throw new CustomException(404, "Matching entity not found");
 
             return _mapper.Map<AddressDto>(entity);
         }
@@ -92,7 +84,7 @@ namespace eCommerce.Service.Services
             var entity = await _addressRepository.SelectAsync(expression);
 
             if (entity is null)
-                throw new CustomException(404, "Matching user not found");
+                throw new CustomException(404, "Matching entity not found");
 
             _mapper.Map(userDto, entity, typeof(AddressDto), typeof(Address));
 

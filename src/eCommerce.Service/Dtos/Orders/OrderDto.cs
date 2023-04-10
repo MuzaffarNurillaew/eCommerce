@@ -7,6 +7,7 @@ namespace eCommerce.Service.Dtos.Orders
 {
     public class OrderDto
     {
+        public long Id { get; set; }
         public User User { get; set; }
         public PaymentType PaymentType { get; set; }
         public OrderStatus Status { get; set; }

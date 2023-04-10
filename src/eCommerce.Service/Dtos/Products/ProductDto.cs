@@ -5,6 +5,7 @@ namespace eCommerce.Service.Dtos.Products
 {
     public class ProductDto
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Count { get; set; }
@@ -12,7 +13,7 @@ namespace eCommerce.Service.Dtos.Products
 
         public ProductCategory Category { get; set; }
 
-        public ICollection<ProductSearchTag> SearchTags { get; set; }
+        public ICollection<SearchTagCreationDto> SearchTags { get; set; }
         public ICollection<OrderItem> Orders { get; set; }
     }
 }

@@ -4,6 +4,7 @@ namespace eCommerce.Service.Dtos.Users
 {
     public class AddressDto
     {
+        public long Id { get; set; }
         public string Planet { get; set; } = "Earth";
         public string Country { get; set; }
         public string City { get; set; }
