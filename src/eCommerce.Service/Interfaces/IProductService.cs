@@ -13,5 +13,6 @@ namespace eCommerce.Service.Interfaces
         Task<ProductDto> GetAsync(Expression<Func<Product, bool>> expression);
         Task<List<ProductDto>> GetAllAsync(PaginationParams @params, Expression<Func<Product, bool>> expression = null, string searchString = null);
         Task<ProductDto> AddSearchTagAsync(long productId, SearchTagCreationDto searchTag);
+        Task<ProductDto> AddExistingSearchTagAsync(long productId, long searchTagId);
     }
 }

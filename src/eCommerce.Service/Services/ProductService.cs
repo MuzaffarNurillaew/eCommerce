@@ -25,6 +25,17 @@ namespace eCommerce.Service.Services
             _productSearchTagService = productSearchTagService;
         }
 
+        public async Task<ProductDto> AddExistingSearchTagAsync(long productId, long searchTagId)
+        {
+            await this._productSearchTagService.CreateAsync(new ProductSearchTagCreationDto()
+            {
+                ProductId = productId,
+                SearchTagId = searchTagId
+            });
+
+            return await this.GetAsync(p => p.Id == productId);
+        }
+
         public async Task<ProductDto> AddSearchTagAsync(long productId, SearchTagCreationDto searchTag)
         {
             var entity = await this.GetAsync(p => p.Id == productId);
@@ -99,10 +110,43 @@ namespace eCommerce.Service.Services
                 var foundEntities = entities.Where(p => p.Name.Contains(searchString)).ToList();
                 searchResult.AddRange( this._mapper.Map<List<ProductDto>>(foundEntities));
 
-                foreach(var entity in entities)
+                List<SearchTag> tags = await this._searchTagService.GetAllAsync();
+                
+                // all ids of tags which satisfies expression
+                List<long> ids = new List<long>();
+                foreach (var tag in tags)
                 {
-                    
+                    if (tag.SearchString is not null && tag.SearchString.ToLower().Contains(searchString.ToLower()))
+                    {
+                        ids.Add(tag.Id);
+                    }
                 }
+
+                ids = ids.Distinct().ToList();
+
+                // find product ids with relational table ProductSearchTags
+                List<long> productIds = new List<long>();
+
+                foreach (var id in ids)
+                {
+                    var pst = await this._productSearchTagService.GetAsync(pst => pst.Id == id);
+                    
+                    productIds.Add(pst.ProductId);
+                }
+                productIds = productIds.Distinct().ToList();
+
+                List<Product> foundEntitiesFromSearchTag = new List<Product>();
+
+                foreach(var id in productIds)
+                {
+                    var foundEntity = await this._productRepository.SelectAsync(p => p.Id == id);
+
+                    foundEntitiesFromSearchTag.Add(foundEntity);
+                }
+
+                searchResult.AddRange(this._mapper.Map<List<ProductDto>>(foundEntitiesFromSearchTag));
+
+                return searchResult;
             }
             else
             {
