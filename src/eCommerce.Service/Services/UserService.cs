@@ -24,7 +24,7 @@ namespace eCommerce.Service.Services
         public async Task<UserDto> CreateAsync(UserCreationDto userDto)
         {
             var entity = await _userRepository.SelectAsync(user
-                => user.Email == userDto.Email || user.Phone == userDto.Phone);
+                => user.Email == userDto.Email || user.Phone == userDto.Phone || user.UserName == userDto.UserName);
 
             if (entity is not null)
             {
@@ -86,14 +86,14 @@ namespace eCommerce.Service.Services
             return _mapper.Map<UserDto>(entity);
         }
 
-        public async Task<UserDto> UpdateAsync(Expression<Func<User, bool>> expression, UserDto userDto)
+        public async Task<UserDto> UpdateAsync(Expression<Func<User, bool>> expression, UserUpdateDto userDto)
         {
             var entity = await _userRepository.SelectAsync(expression);
 
             if (entity is null)
                 throw new CustomException(404, "Matching user not found");
 
-            _mapper.Map(userDto, entity, typeof(UserDto), typeof(User));
+            _mapper.Map(userDto, entity, typeof(UserUpdateDto), typeof(User));
 
             var updatedEntity = await _userRepository.UpdateAsync(entity);
             await _userRepository.SaveAsync();
