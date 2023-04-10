@@ -18,8 +18,4 @@
     <ProjectReference Include="..\eCommerce.Data\eCommerce.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Resgistration\" />
-  </ItemGroup>
-
 </Project>
