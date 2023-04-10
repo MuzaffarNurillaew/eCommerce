@@ -99,10 +99,11 @@ namespace eCommerce.Service.Services
                 var foundEntities = entities.Where(p => p.Name.Contains(searchString)).ToList();
                 searchResult.AddRange( this._mapper.Map<List<ProductDto>>(foundEntities));
 
-                foreach(var entity in entities)
-                {
-                    
-                }
+                List<Product> foundEntitiesFromSearchTag = await this._productSearchTagService.GetAllProductsWithSpecifiedTags(searchString);
+
+                searchResult.AddRange(this._mapper.Map<List<ProductDto>>(foundEntitiesFromSearchTag));
+
+                return searchResult;
             }
             else
             {
