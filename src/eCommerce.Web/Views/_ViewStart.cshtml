@@ -3,6 +3,10 @@
     {
         Layout = "~/Views/Shared/_UserLayout.cshtml";
     }
+    else if (ViewContext.RouteData.Values["controller"].ToString().Equals("Product", StringComparison.InvariantCultureIgnoreCase))
+    {
+        Layout = "~/Views/Shared/_ProductLayout.cshtml";
+    }
     else
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
