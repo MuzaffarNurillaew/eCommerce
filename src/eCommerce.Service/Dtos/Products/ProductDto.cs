@@ -13,7 +13,7 @@ namespace eCommerce.Service.Dtos.Products
 
         public ProductCategory Category { get; set; }
 
-        public ICollection<SearchTagCreationDto> SearchTags { get; set; }
+        public ICollection<SearchTag> SearchTags { get; set; }
         public ICollection<OrderItem> Orders { get; set; }
     }
 }

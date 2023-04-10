@@ -10,7 +10,7 @@ namespace eCommerce.Service.Interfaces
 {
     public interface ISearchTagService
     {
-        Task<SearchTagCreationDto> CreateAsync(SearchTag userDto);
+        Task<SearchTag> CreateAsync(SearchTagCreationDto userDto);
         Task<SearchTag> UpdateAsync(Expression<Func<SearchTag, bool>> expression, SearchTag userDto);
         Task<bool> DeleteAsync(Expression<Func<SearchTag, bool>> expression);
         Task<SearchTag> GetAsync(Expression<Func<SearchTag, bool>> expression);
