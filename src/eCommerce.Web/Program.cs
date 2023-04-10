@@ -1,6 +1,9 @@
 using eCommerce.Data.DbContexts;
 using eCommerce.Service.Mappers;
 using Microsoft.EntityFrameworkCore;
+using eCommerce.Web.Extensions;
+using eCommerce.Data.IRepositories;
+using eCommerce.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,12 @@ builder.Services.AddDbContext<eCommerceDbContext>(option =>
 
 
 builder.Services.AddAutoMapper(typeof(MapperProfile));
+
+// registrate services to di container
+builder.Services.AddCustomServices();
+
+// registrate repository to di container
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 
