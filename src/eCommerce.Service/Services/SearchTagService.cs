@@ -1,11 +1,6 @@
-﻿using AutoMapper;
-using eCommerce.Data.IRepositories;
-using eCommerce.Domain.Configurations;
+﻿using eCommerce.Domain.Configurations;
 using eCommerce.Domain.Entities.Products;
-using eCommerce.Domain.Entities.Users;
 using eCommerce.Service.Dtos.Products;
-using eCommerce.Service.Dtos.Users;
-using eCommerce.Service.Exceptions;
 using eCommerce.Service.Interfaces;
 using System.Linq.Expressions;
 
@@ -13,7 +8,7 @@ namespace eCommerce.Service.Services
 {
     public class SearchTagService : ISearchTagService
     {
-        public Task<SearchTagCreationDto> CreateAsync(SearchTagCreationDto userDto)
+        public Task<SearchTag> CreateAsync(SearchTagCreationDto dto)
         {
             throw new NotImplementedException();
         }
@@ -23,7 +18,7 @@ namespace eCommerce.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<SearchTag>> GetAllAsync(PaginationParams @params, Expression<Func<SearchTag, bool>> expression = null)
+        public Task<List<SearchTag>> GetAllAsync(Expression<Func<SearchTag, bool>> expression = null)
         {
             throw new NotImplementedException();
         }
@@ -33,7 +28,7 @@ namespace eCommerce.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<SearchTag> UpdateAsync(Expression<Func<SearchTag, bool>> expression, SearchTag userDto)
+        public Task<SearchTag> UpdateAsync(Expression<Func<SearchTag, bool>> expression, SearchTag dto)
         {
             throw new NotImplementedException();
         }
