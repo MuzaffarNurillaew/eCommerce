@@ -11,7 +11,7 @@ namespace eCommerce.Web.Controllers
 
         public IActionResult SignUp()
         {
-            return View();
+            return View("SignUp");
         }
         public async Task<IActionResult> DoSignUp(UserCreationDto userCreationDto) 
         { 
