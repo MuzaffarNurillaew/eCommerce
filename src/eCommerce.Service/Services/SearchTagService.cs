@@ -1,36 +1,80 @@
-﻿using eCommerce.Domain.Configurations;
+﻿using AutoMapper;
+using eCommerce.Data.IRepositories;
 using eCommerce.Domain.Entities.Products;
+using eCommerce.Domain.Entities.Users;
 using eCommerce.Service.Dtos.Products;
+using eCommerce.Service.Dtos.Users;
+using eCommerce.Service.Exceptions;
 using eCommerce.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace eCommerce.Service.Services
 {
     public class SearchTagService : ISearchTagService
     {
-        public Task<SearchTag> CreateAsync(SearchTagCreationDto dto)
+        private readonly IRepository<SearchTag> _searchTagRepository;
+        private readonly IMapper _mapper;
+
+        public SearchTagService(IRepository<SearchTag> searchTagRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _searchTagRepository = searchTagRepository;
+            _mapper = mapper;
         }
 
-        public Task<bool> DeleteAsync(Expression<Func<SearchTag, bool>> expression)
+
+        public async Task<SearchTag> CreateAsync(SearchTagCreationDto dto)
         {
-            throw new NotImplementedException();
+            var entity = await this._searchTagRepository
+                .SelectAsync(st => st.SearchString.Equals(dto.SearchString, StringComparison.OrdinalIgnoreCase));
+
+            if (entity is not null)
+            {
+                return entity;
+            }
+
+            var insertedEntity = await this._searchTagRepository.InsertAsync(this._mapper.Map<SearchTag>(dto));
+            await this._searchTagRepository.SaveAsync();
+
+            return insertedEntity;
         }
 
-        public Task<List<SearchTag>> GetAllAsync(Expression<Func<SearchTag, bool>> expression = null)
+        public async Task<bool> DeleteAsync(Expression<Func<SearchTag, bool>> expression)
         {
-            throw new NotImplementedException();
+            var isDeleted = await _searchTagRepository.DeleteAsync(expression);
+            if (!isDeleted)
+                throw new CustomException(404, "Matching entity not found");
+
+            await this._searchTagRepository.SaveAsync();
+            return isDeleted;
         }
 
-        public Task<SearchTag> GetAsync(Expression<Func<SearchTag, bool>> expression)
+        public async Task<List<SearchTag>> GetAllAsync(Expression<Func<SearchTag, bool>> expression = null)
+            => await this._searchTagRepository.SelectAll().Where(expression).ToListAsync();
+
+        public async Task<SearchTag> GetAsync(Expression<Func<SearchTag, bool>> expression)
         {
-            throw new NotImplementedException();
+            var entity = await this._searchTagRepository.SelectAsync(expression);
+
+            if (entity is null)
+                throw new CustomException(404, "Matching entity not found");
+
+            return entity;
         }
 
-        public Task<SearchTag> UpdateAsync(Expression<Func<SearchTag, bool>> expression, SearchTag dto)
+        public async Task<SearchTag> UpdateAsync(Expression<Func<SearchTag, bool>> expression, SearchTag dto)
         {
-            throw new NotImplementedException();
+            var entity = await this._searchTagRepository.SelectAsync(expression);
+
+            if (entity is null)
+                throw new CustomException(404, "Matching entity not found");
+
+            entity.SearchString = dto.SearchString;
+
+            var updatedEntity = await this._searchTagRepository.UpdateAsync(entity);
+            await this._searchTagRepository.SaveAsync();
+
+            return updatedEntity;
         }
     }
 
