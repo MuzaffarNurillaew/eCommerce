@@ -27,7 +27,8 @@ namespace eCommerce.Service.Dtos.Users
         [Required]
         public string Password { get; set; }
 
-        public CreditCard CreditCard { get; set; }
+        public CreditCard CreditCard { get; set; } = null;
+
 
         public AddressCreationDto Address { get; set; } = null;
     }

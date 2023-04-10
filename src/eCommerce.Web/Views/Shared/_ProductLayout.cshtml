@@ -10,22 +10,28 @@
 </head>
 <body>
 	<header>
-		<nav class="nav">
-			<div>
-				<h1>Ecommers</h1>
-			</div>
-			<div>
-				<ul>
-					<li><a href="#">Home</a></li>
-				</ul>
-			</div>
-			<button onclick="activeToggle(this)">
-				<span></span>
-				<span></span>
-				<span></span>
-			</button>
-		</nav>
-	</header>
+	<nav class="nav">
+		<div>
+			<h1>Ecommers</h1>
+		</div>
+		<div>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li>
+					<a href="#">
+						<i class="bi bi-person"></i> Profile
+					</a>
+				</li>
+			</ul>
+		</div>
+		<button onclick="activeToggle(this)">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+	</nav>
+</header>
+
 	<div class="container">
 		<main role="main" class="pb-3">
 			@RenderBody()
@@ -36,6 +42,19 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("Scripts", required: false)
+	<script>
+		function activeToggle(element) {
+			parent = element.parentElement;
+			parent.classList.toggle('active');
+		}
+		function dropdownToggle1(element) {
+			parent = element.parentElement;
+			parent.querySelector('div').classList.toggle('active');
+		}
+	</script>
+</body>
+</html>
+
 	<style type="text/css">
 		body {
 			margin: 0;
@@ -280,15 +299,3 @@
 						}
 		}
 	</style>
-	<script>
-		function activeToggle(element) {
-			parent = element.parentElement;
-			parent.classList.toggle('active');
-		}
-		function dropdownToggle1(element) {
-			parent = element.parentElement;
-			parent.querySelector('div').classList.toggle('active');
-		}
-	</script>
-</body>
-</html>
