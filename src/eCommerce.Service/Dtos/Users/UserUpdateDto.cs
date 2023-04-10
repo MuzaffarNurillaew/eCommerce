@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace eCommerce.Service.Dtos.Users
 {
-    public class UserCreationDto
+    public class UserUpdateDto
     {
         [Required, StringLength(30, MinimumLength = 3)]
         public string FirstName { get; set; }
@@ -23,12 +23,11 @@ namespace eCommerce.Service.Dtos.Users
         [EmailAddress]
         public string Email { get; set; }
         public decimal Balance { get; set; }
-        
+
         [Required]
         public string Password { get; set; }
 
-        public CreditCard CreditCard { get; set; } = null;
-
+        public CreditCard CreditCard { get; set; }
 
         public AddressCreationDto Address { get; set; } = null;
     }

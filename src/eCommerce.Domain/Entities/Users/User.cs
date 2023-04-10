@@ -1,6 +1,7 @@
 ﻿using eCommerce.Domain.Commons;
 using eCommerce.Domain.Entities.Chats;
 using eCommerce.Domain.Entities.Orders;
+using eCommerce.Domain.Enums;
 
 namespace eCommerce.Domain.Entities.Users
 {
@@ -13,6 +14,8 @@ namespace eCommerce.Domain.Entities.Users
         public string Phone { get; set; }
         public string Email { get; set; }
         public decimal Balance { get; set; }
+
+        public UserRole Role { get; set; } = UserRole.User;
         public string Password { get; set; }
 
         public long AddressId { get; set; }
