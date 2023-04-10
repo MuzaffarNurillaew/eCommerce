@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using eCommerce.Data.IRepositories;
 using eCommerce.Domain.Configurations;
-using eCommerce.Domain.Entities.Chats;
 using eCommerce.Domain.Entities.Orders;
-using eCommerce.Domain.Entities.Users;
-using eCommerce.Service.Dtos.Chats;
+using eCommerce.Domain.Entities.Products;
+using eCommerce.Domain.Enums;
 using eCommerce.Service.Dtos.Orders;
 using eCommerce.Service.Exceptions;
 using eCommerce.Service.Extensions;
@@ -16,45 +15,53 @@ namespace eCommerce.Service.Services
     public class OrderService : IOrderService
     {
         private readonly IRepository<Order> _orderRepository;
+        private readonly IRepository<OrderItem> _orderItemRepository;
+        private readonly IRepository<Product> _productRepository;
         private readonly IMapper _mapper;
 
-        public OrderService(IRepository<Order> orderRepository, IMapper mapper)
+        public OrderService(IRepository<Order> orderRepository, IMapper mapper, IRepository<OrderItem> orderItemRepository)
         {
             _orderRepository = orderRepository;
             _mapper = mapper;
+            _orderItemRepository = orderItemRepository;
         }
-        public async Task<OrderDto> CreateAsync(OrderCreationDto userDto)
+        public async Task<OrderDto> CreateAsync(OrderCreationDto dto)
         {
-            var entity = await _orderRepository.SelectAsync(order
-              => order.UserId == userDto.UserId);
-
-            if (entity is not null)
+            var entityToInsert = new Order()
             {
-                throw new CustomException(400, "User Already exists");
+                UserId = dto.UserId,
+                PaymentType = dto.PaymentType,
+                Status = OrderStatus.Pending,
+                IsPaid = false
+            };
+            var insertedEntity = await this._orderRepository.InsertAsync(entityToInsert);
+            await this._orderRepository.SaveAsync();
+
+            var mapperItems = this._mapper.Map<List<OrderItem>>(dto.Items);
+            decimal totalMoney = 0;
+
+            foreach (var item in mapperItems)
+            {
+                item.OrderId = insertedEntity.Id;
+                await this._orderItemRepository.InsertAsync(item);
+
+                var product = await this._productRepository.SelectAsync(p => p.Id == item.ProductId);
+                totalMoney += item.ProductCount * product.Price;
             }
 
-            Order entityToInsert = _mapper.Map<Order>(userDto);
+            insertedEntity.TotalPayment = totalMoney;
 
-            try
-            {
-                entityToInsert.CreatedAt = DateTime.UtcNow;
-                var insertedOrder = await _orderRepository.InsertAsync(entityToInsert);
-                var result = _mapper.Map<OrderDto>(insertedOrder);
+            await this._orderItemRepository.SaveAsync();
+            await this._orderRepository.SaveAsync();
 
-                await _orderRepository.SaveAsync();
-                return result;
-            }
-            catch
-            {
-                throw new CustomException(500, "Something went wrong");
-            }
+            return this._mapper.Map<OrderDto>(insertedEntity);
         }
 
         public async Task<bool> DeleteAsync(Expression<Func<Order, bool>> expression)
         {
             var isDeleted = await _orderRepository.DeleteAsync(expression);
             if (!isDeleted)
-                throw new CustomException(404, "Matching user not found");
+                throw new CustomException(404, "Matching entity not found");
 
             await _orderRepository.SaveAsync();
             return isDeleted;
@@ -83,24 +90,33 @@ namespace eCommerce.Service.Services
             var entity = await _orderRepository.SelectAsync(expression);
 
             if (entity is null)
-                throw new CustomException(404, "Matching user not found");
+                throw new CustomException(404, "Matching entity not found");
 
             return _mapper.Map<OrderDto>(entity);
         }
 
-        public async Task<OrderDto> UpdateAsync(Expression<Func<Order, bool>> expression, OrderUpdateDto userDto)
+        public async Task<OrderDto> UpdateAsync(Expression<Func<Order, bool>> expression, OrderCreationDto dto)
         {
             var entity = await _orderRepository.SelectAsync(expression);
-
+            
             if (entity is null)
-                throw new CustomException(404, "Matching user not found");
+                throw new CustomException(404, "Matching entity not found");
 
-            _mapper.Map(userDto, entity, typeof(OrderDto), typeof(Order));
+            while (true)
+            {
+                bool isDeleted = await this._orderItemRepository.DeleteAsync(oi => oi.OrderId == entity.Id);
 
-            var updatedEntity = await _orderRepository.UpdateAsync(entity);
-            await _orderRepository.SaveAsync();
+                if (isDeleted == false)
+                {
+                    break;
+                }
+            }
+            await this._orderItemRepository.SaveAsync();
+            await this._orderRepository.DeleteAsync(o => o.Id == entity.Id);
 
-            return _mapper.Map<OrderDto>(updatedEntity);
+            var result = await this.CreateAsync(dto);
+
+            return result;
         }
     }
 }
