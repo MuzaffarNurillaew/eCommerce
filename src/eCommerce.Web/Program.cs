@@ -1,9 +1,12 @@
 using eCommerce.Data.DbContexts;
+using eCommerce.Service.Interfaces;
+using eCommerce.Service.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +17,9 @@ builder.Services.AddDbContext<eCommerceDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("eCommerce.Data"));
 });
+
+
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 var app = builder.Build();
 
