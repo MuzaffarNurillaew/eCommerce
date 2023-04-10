@@ -13,7 +13,7 @@ namespace eCommerce.Service.Services
 {
     public class SearchTagService : ISearchTagService
     {
-        public Task<SearchTagCreationDto> CreateAsync(SearchTag userDto)
+        public Task<SearchTagCreationDto> CreateAsync(SearchTagCreationDto userDto)
         {
             throw new NotImplementedException();
         }
