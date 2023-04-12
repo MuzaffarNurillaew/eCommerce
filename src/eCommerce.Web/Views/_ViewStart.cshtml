@@ -7,6 +7,10 @@
     {
         Layout = "~/Views/Shared/_ProductLayout.cshtml";
     }
+    else if (ViewContext.RouteData.Values["controller"].ToString().Equals("Error", StringComparison.InvariantCultureIgnoreCase))
+    {
+        Layout = "~/Views/Shared/_NoLayout.cshtml";
+    }
     else
     {
         Layout = "~/Views/Shared/_Layout.cshtml";

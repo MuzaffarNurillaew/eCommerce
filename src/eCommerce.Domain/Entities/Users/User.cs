@@ -18,10 +18,10 @@ namespace eCommerce.Domain.Entities.Users
         public UserRole Role { get; set; } = UserRole.User;
         public string Password { get; set; }
 
-        public long AddressId { get; set; }
+        public long? AddressId { get; set; }
         public Address Address { get; set; }
 
-        public long CreditCardId { get; set; }
+        public long? CreditCardId { get; set; }
         public CreditCard CreditCard { get; set; }
 
         public ICollection<Order> Orders { get; set; }

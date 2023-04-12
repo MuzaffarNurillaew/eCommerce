@@ -1,12 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eCommerce.Service.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Web.Controllers
 {
     public class UserController : Controller
     {
-        public IActionResult Index()
+        private readonly IUserService userService;
+
+        public UserController(IUserService userService)
         {
-            return View("Index","_UserLayout");
+            this.userService = userService;
+        }
+
+        public async Task<IActionResult> Feed(int id)
+        {
+         
+            var feedData = await this.userService.GetAsync(x => x.Id == id);
+            return View(feedData);
         }
     }
 }
