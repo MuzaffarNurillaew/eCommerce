@@ -16,7 +16,18 @@ namespace eCommerce.Web.Controllers
         {
          
             var feedData = await this.userService.GetAsync(x => x.Id == id);
+            Response.Cookies.Append("userid", feedData.Id.ToString());
             return View(feedData);
         }
+        public async Task<IActionResult> Profile()
+        {
+            var id = Request.Cookies["userid"];
+
+            var feedData = await this.userService.GetAsync(x => x.Id == int.Parse(id));
+            return View(feedData);
+        }
+
+
+        
     }
 }

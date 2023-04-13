@@ -1,168 +1,24 @@
-﻿
+﻿@using eCommerce.Service.Dtos.Products;
+@model List<ProductDto>
 @{
     ViewData["Title"] = "Products";
-
 }
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/fonts.css">
-    <link rel="stylesheet" href="css/media.css">
-    <link rel="icon" href="img/icon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-</head>
-<body>
-
-    <main class="main">
-        <section class="product">
-            <div class="card__content">
-
-                <div class="card" id="gamb">
-
-                    <div class="image">
-                        <div class="img__blog">
-
-                            <img class="card__img" src="img/product2.jpg" alt="">
-                            <div class="image__content">
-                                <p class="img__text">gamburger</p>
-                                <p class="img__cost">10000 sum</p>
-                            </div>
-
-                        </div>
+                    <h1 class="card-title">@item.Name</h1>
+                    <h2 class="card-subtitle mb-2 text-muted">Price:  @item.Price</h2>
+                    <div class="product-info" style="display:none">
+                        <p>Description: @item.Description</p>
+                        <p>Count: @item.Count</p>
                     </div>
-
-                    <p class="card__info">Meet the simple GAMBURGER. It is not so delicious, but rather cheap!</p>
-
-                    <div class="card__calculate">
-
-                        <div class="calculate__content">
-                            <div class="minus" id="cardBtn" data-symbol="-"><i class="fas fa-minus"></i></div>
-                            <div class="input">0</div>
-                            <div class="plus" id="cardBtn" data-symbol="+"><i class="fas fa-plus"></i></div>
-                        </div>
-
-                        <div class="product__price"><span class="price">0</span>sum</div>
-
-                    </div>
-
-                    <p class="product__caloria"><span class="caloria">0</span>calories</p>
-
-                </div>
-
-                <div class="card" id="fresh">
-
-                    <div class="image">
-                        <div class="img__blog">
-
-                            <img class="card__img" src="img/product1.jpg" alt="">
-                            <div class="image__content">
-                                <p class="img__text">gamburger fresh</p>
-                                <p class="img__cost">20500 sum</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <p class="card__info">Meet Freshman FAST FOOD. Everything old is over there.</p>
-
-                    <div class="card__calculate">
-
-                        <div class="calculate__content">
-                            <div class="minus" id="cardBtn" data-symbol="-"><i class="fas fa-minus"></i></div>
-                            <div class="input">0</div>
-                            <div class="plus" id="cardBtn" data-symbol="+"><i class="fas fa-plus"></i></div>
-                        </div>
-
-                        <div class="product__price"><span class="price">0</span>sum</div>
-
-                    </div>
-
-                    <p class="product__caloria"><span class="caloria">0</span>calories</p>
-
-                </div>
-
-                <div class="card" id="combo">
-
-                    <div class="image">
-                        <div class="img__blog">
-
-                            <img class="card__img" src="img/product3.jpg" alt="">
-                            <div class="image__content">
-                                <p class="img__text">fresh combo</p>
-                                <p class="img__cost">31900 sum</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <p class="card__info">FRESH and POTATO. Exact same FRESH, but now with potatoes.</p>
-
-                    <div class="card__calculate">
-
-                        <div class="calculate__content">
-                            <div class="minus" id="cardBtn" data-symbol="-"><i class="fas fa-minus"></i></div>
-                            <div class="input">0</div>
-                            <div class="plus" id="cardBtn" data-symbol="+"><i class="fas fa-plus"></i></div>
-                        </div>
-
-                        <div class="product__price"><span class="price">0</span>sum</div>
-
-                    </div>
-
-                    <p class="product__caloria"><span class="caloria">0</span>calories</p>
-
-                </div>
-
-            </div>
-
-            <div class="delivery__blog">
-                <button class="delivery" id="rippleBtn" type="button">$ Delivery</button>
-            </div>
-
-            <div class="order">
-                <div class="order__blog">
-
-                    <i class="fas fa-times"></i>
-                    <div class="order__text">Your order</div>
-
-                    <div class="gamb__blog">
-                        <p class="gamburger">GAMBURGER</p>
-                        <span class="gamb__numb">0</span>
-                    </div>
-
-                    <div class="gamb__blog">
-                        <p class="gamburger__fresh">GAMBURGER Fresh</p>
-                        <span class="fresh__numb">0</span>
-                    </div>
-
-                    <div class="gamb__blog">
-                        <p class="gamburger__combo">fresh combo</p>
-                        <span class="combo__numb">0</span>
-                    </div>
-
-                    <div class="total__text">Total <span class="total">0</span></div>
-                    <div class="purchase__text">Total purchase <span class="purchase">0</span> sum</div>
-
-
-                    <button class="pay__button" type="submit">Pay</button>
-
+                    <a href="#!" class="btn btn-outline-primary" style="font-size: 25px;">Add to cart</a>
                 </div>
             </div>
-
-
-        </section>
-    </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
-
-    <script src="script.js"></script>
-
-</body>
-</html>
+        </div>
+    }
+</div>
