@@ -5,6 +5,7 @@ namespace eCommerce.Service.Dtos.Users
 {
     public class UserUpdateDto
     {
+
         [Required, StringLength(30, MinimumLength = 3)]
         public string FirstName { get; set; }
 
