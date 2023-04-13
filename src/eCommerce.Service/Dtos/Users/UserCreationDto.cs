@@ -22,7 +22,7 @@ namespace eCommerce.Service.Dtos.Users
 
         [EmailAddress]
         public string Email { get; set; }
-        public decimal Balance { get; set; }
+        public decimal Balance { get; set; } = 0;
         
         [Required]
         public string Password { get; set; }
