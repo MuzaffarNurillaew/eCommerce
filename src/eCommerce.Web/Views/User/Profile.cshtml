@@ -51,7 +51,7 @@
                 <div class="card mb-3">
                     <div class="card-body" style="position: relative;">
                         <a href="#!" style="position: absolute; left: 650px; top: 237px" class="btn btn-warning">@value1</a>
-                            <a href="#!" style="position: absolute; left: 650px; top: 180px;" class="btn btn-warning">@valuu2</a>
+                            <a href="@Url.Action("Card","User")" style="position: absolute; left: 650px; top: 180px;" class="btn btn-warning">@valuu2</a>
                         <div class="row">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Full Name</h6>
@@ -100,7 +100,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-12">
-                                <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                                <a class="btn btn-info " target="__blank" href="@Url.Action("Update","User")">Edit</a>
                             </div>
                         </div>
                     </div>
